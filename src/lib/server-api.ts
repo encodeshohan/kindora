@@ -1,6 +1,6 @@
 import { API_URL } from "@/lib/api";
 import { getTokenFromServer } from "@/lib/getTokenFromServer";
-import type { IJoinedEvent } from "@/lib/types/event";
+import type { IEvent, IJoinedEvent } from "@/lib/types/event";
 
 // Server components use the session's token, so this file must never be imported by a client component.
 async function authorizedGet<T>(path: string): Promise<T> {
@@ -21,3 +21,6 @@ async function authorizedGet<T>(path: string): Promise<T> {
 
 export const getJoinedEvents = () =>
     authorizedGet<IJoinedEvent[]>("/joined-events");
+
+
+export const getMyEvents = () => authorizedGet<IEvent[]>("/my-events");
