@@ -28,3 +28,13 @@ export interface IJoinedEvent {
     userPhoto: string;
     joinedAt: string;
 }
+
+
+export type EventFormValues = {
+    title: string;
+    description: string;
+    type: EventType | "";
+    thumbnail: string;
+    location: string;
+    date: string;
+};
