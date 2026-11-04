@@ -45,17 +45,28 @@ export const auth = betterAuth({
     socialProviders,
     hooks: {
         before: createAuthMiddleware(async (ctx) => {
-            if (ctx.path !== "/sign-up/email") return;
             const body = ctx.body as
                 | { name?: string; email?: string; password?: string; image?: string }
                 | undefined;
-            const message =
-                validateName(body?.name ?? "") ??
-                validateEmail(body?.email ?? "") ??
-                validatePassword(body?.password ?? "") ??
-                validatePhotoUrl(body?.image ?? "");
-            if (message) {
-                throw new APIError("BAD_REQUEST", { message });
+
+            if (ctx.path === "/sign-up/email") {
+                const message =
+                    validateName(body?.name ?? "") ??
+                    validateEmail(body?.email ?? "") ??
+                    validatePassword(body?.password ?? "") ??
+                    validatePhotoUrl(body?.image ?? "");
+                if (message) {
+                    throw new APIError("BAD_REQUEST", { message });
+                }
+            }
+
+            if (ctx.path === "/update-user") {
+                const message =
+                    (body?.name === undefined ? null : validateName(body.name)) ??
+                    (body?.image === undefined ? null : validatePhotoUrl(body.image));
+                if (message) {
+                    throw new APIError("BAD_REQUEST", { message });
+                }
             }
         }),
     },

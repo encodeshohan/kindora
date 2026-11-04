@@ -7,6 +7,7 @@ import {
     CalendarPlus,
     ClipboardList,
     LogOut,
+    UserRound,
 } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
@@ -87,6 +88,10 @@ export default function AuthMenu() {
                     </p>
                 </div>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem render={<Link href="/profile" />}>
+                    <UserRound />
+                    Profile
+                </DropdownMenuItem>
                 <DropdownMenuItem render={<Link href="/create-event" />}>
                     <CalendarPlus />
                     Create Event
