@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { FormEvent } from "react";
+import type { SubmitEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, X } from "lucide-react";
 import { EVENT_TYPES } from "@/lib/constants";
@@ -35,7 +35,7 @@ function FiltersForm({ initial }: { initial: Filters }) {
         initial.search || initial.location || initial.type !== ALL_TYPES,
     );
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         const params = new URLSearchParams();
         if (search.trim()) params.set("search", search.trim());

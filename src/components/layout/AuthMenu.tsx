@@ -21,14 +21,8 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getInitials } from "@/lib/format";
 
-const getInitials = (name: string) =>
-    name
-        .split(" ")
-        .filter(Boolean)
-        .slice(0, 2)
-        .map((part) => part[0].toUpperCase())
-        .join("") || "U";
 
 export default function AuthMenu() {
     const router = useRouter();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { FormEvent } from "react";
+import type { SubmitEvent } from "react";
 import { Mail } from "lucide-react";
 import { toast } from "sonner";
 import { validateEmail } from "@/lib/validation";
@@ -12,7 +12,7 @@ export default function NewsletterSection() {
     const [email, setEmail] = useState("");
     const [error, setError] = useState("");
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         const emailError = validateEmail(email);
         if (emailError) {

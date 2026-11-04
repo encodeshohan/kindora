@@ -1,22 +1,14 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { CalendarX } from "lucide-react";
 import SectionHeading from "@/components/shared/SectionHeading";
 import EventsGrid from "@/components/events/EventsGrid";
 import EventsGridSkeleton from "@/components/events/EventsGridSkeleton";
 import { Button } from "@/components/ui/button";
 import { getEvents } from "@/lib/api";
 import type { IEvent } from "@/lib/types/event";
+import Notice from "@/components/shared/Notice";
 
-function Notice({ title, text }: { title: string; text: string }) {
-    return (
-        <div className="mx-auto flex max-w-md flex-col items-center gap-3 rounded-2xl border bg-card p-10 text-center">
-            <CalendarX className="size-10 text-primary" />
-            <h3 className="text-lg font-semibold">{title}</h3>
-            <p className="text-sm text-muted-foreground">{text}</p>
-        </div>
-    );
-}
+
 
 async function RecentEventsList() {
     let events: IEvent[];

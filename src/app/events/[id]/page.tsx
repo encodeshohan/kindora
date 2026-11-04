@@ -11,18 +11,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getEventById } from "@/lib/api";
-import { formatEventDate } from "@/lib/format";
 import type { IEvent } from "@/lib/types/event";
+import { formatEventDate, getInitials } from "@/lib/format";
 
 export const metadata: Metadata = { title: "Event Details" };
 
-const getInitials = (name: string) =>
-    name
-        .split(" ")
-        .filter(Boolean)
-        .slice(0, 2)
-        .map((part) => part[0].toUpperCase())
-        .join("") || "U";
 
 async function EventDetails({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;

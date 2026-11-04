@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { FormEvent } from "react";
+import type { SubmitEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Pencil } from "lucide-react";
 import { toast } from "sonner";
@@ -55,7 +55,7 @@ export default function EditEventDialog({
         setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
-    const handleSubmit = async (formEvent: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (formEvent: SubmitEvent<HTMLFormElement>) => {
         formEvent.preventDefault();
         const nextErrors = validateEventForm(values, minDate, event.date);
         setErrors(nextErrors);

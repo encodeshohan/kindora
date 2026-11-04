@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { FormEvent } from "react";
+import type { SubmitEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
@@ -34,7 +34,7 @@ export default function CreateEventForm({ minDate }: { minDate: string }) {
         setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         const nextErrors = validateEventForm(values, minDate);
         setErrors(nextErrors);
