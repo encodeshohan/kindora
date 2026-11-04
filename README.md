@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KINDORA
 
-## Getting Started
+KINDORA is a social development events platform. People discover cleanups,
+plantations, donation drives and other community events, join them with one
+click, and host events of their own.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Public home page with a banner, features, the six soonest upcoming events,
+  a photo gallery and a newsletter section
+- Upcoming Events page: future events only, with server-side search by title
+  and filters by type and location
+- Event details page with a Join button (login required, no double joins)
+- Create, update and delete your own events, with validation on every form
+- Joined Events page sorted by event date
+- Profile page to update your name and photo
+- Email and password sign-up and login, plus Google and GitHub sign-in
+- Light and dark theme (dark by default), fully responsive layout
+- Loading skeletons, 404 and error pages, toast messages for every action
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js 16 (App Router, Cache Components), React 19, TypeScript
+- Tailwind CSS v4 and shadcn/ui (Base UI)
+- Better Auth with the MongoDB adapter and the JWT plugin
+- API: [kindora-server](https://github.com/encodeshohan/kindora-server) (Express 5 and MongoDB)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Getting started
 
-## Learn More
+1. Install dependencies: `npm install`
+2. Copy `.env.example` to `.env.local` and fill in the values.
+3. Start the API server (see the kindora-server README).
+4. Start the app: `npm run dev` and open http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+## Environment variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Name | Description |
+|---|---|
+| `MONGODB_URI` | MongoDB connection string (same cluster as the API) |
+| `BETTER_AUTH_SECRET` | Long random secret used by Better Auth |
+| `BETTER_AUTH_URL` | Public URL of this app (no trailing slash). Must match `CLIENT_URL` on the API |
+| `NEXT_PUBLIC_API_URL` | Public URL of the API server (no trailing slash) |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google OAuth credentials (optional) |
+| `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` | GitHub OAuth credentials (optional) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts
 
-## Deploy on Vercel
+- `npm run dev` starts the development server
+- `npm run build` creates a production build
+- `npm run start` serves the production build
+- `npm run lint` runs ESLint
+- `npx tsc --noEmit` type-checks the project
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## How authentication works
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Better Auth signs users in and issues a short-lived JWT. The client sends it
+as `Authorization: Bearer <token>`, and the API verifies it against this app's
+public keys at `/api/auth/jwks`. Private pages are protected by `src/proxy.ts`
+and by a second session check inside each page, so reloading a private page
+keeps you signed in.
+
+## Notes
+
+- In development, the browser console may show a React 19 warning about a
+  script tag from `next-themes`. It is a known upstream issue, only appears in
+  development, and does not affect the theme or production builds.
+- Event dates are compared using Bangladesh time (Asia/Dhaka). An event
+  happening today still counts as upcoming.
