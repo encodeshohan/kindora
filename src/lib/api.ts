@@ -1,4 +1,5 @@
 import type { IEvent } from "@/lib/types/event";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 type EventQuery = {
     limit?: number;
@@ -22,6 +23,22 @@ export const getEvents = async (params: EventQuery = {}): Promise<IEvent[]> => {
 
     if (!response.ok) {
         throw new Error("Failed to load events");
+    }
+    return response.json();
+};
+
+
+// Returns null when the id is malformed or the event does not exist.
+export const getEventById = async (id: string): Promise<IEvent | null> => {
+    const response = await fetch(`${API_URL}/events/${encodeURIComponent(id)}`, {
+        cache: "no-store",
+    });
+
+    if (response.status === 400 || response.status === 404) {
+        return null;
+    }
+    if (!response.ok) {
+        throw new Error("Failed to load event");
     }
     return response.json();
 };
