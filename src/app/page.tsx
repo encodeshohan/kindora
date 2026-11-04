@@ -1,20 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import FeaturesSection from "@/components/home/features-section";
+import GallerySection from "@/components/home/gallery-section";
+import HeroBanner from "@/components/home/hero-banner";
+import NewsletterSection from "@/components/home/newsletter-section";
+import RecentEvents from "@/components/home/recent-events";
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-7xl px-6 py-16">
-      <h1 className="text-4xl font-light tracking-tight md:text-5xl">
-        Home page coming soon
-      </h1>
-      <Card className="mt-8 max-w-sm">
-        <CardHeader>
-          <CardTitle>Layout check</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Button>Primary button</Button>
-        </CardContent>
-      </Card>
-    </div>
+    <>
+      <HeroBanner />
+      <FeaturesSection />
+      <RecentEvents />
+      <GallerySection />
+      <NewsletterSection />
+    </>
   );
 }
