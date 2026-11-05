@@ -2,6 +2,9 @@ import Link from "next/link";
 import { Mail, MapPin } from "lucide-react";
 import Logo from "./Logo";
 import XLogo from "./XLogo";
+import FacebookLogo from "./FacebookLogo";
+import InstagramLogo from "./InstagramLogo";
+import RedditLogo from "./RedditLogo";
 
 const exploreLinks = [
     { href: "/", label: "Home" },
@@ -12,6 +15,13 @@ const memberLinks = [
     { href: "/create-event", label: "Create Event" },
     { href: "/manage-events", label: "Manage Events" },
     { href: "/joined-events", label: "Joined Events" },
+];
+
+const socialLinks = [
+    { href: "https://facebook.com", label: "KINDORA on Facebook", Icon: FacebookLogo },
+    { href: "https://instagram.com", label: "KINDORA on Instagram", Icon: InstagramLogo },
+    { href: "https://reddit.com", label: "KINDORA on Reddit", Icon: RedditLogo },
+    { href: "https://x.com", label: "KINDORA on X", Icon: XLogo },
 ];
 
 export default function Footer() {
@@ -27,15 +37,20 @@ export default function Footer() {
                         KINDORA connects neighbours with cleanups, plantations, donation
                         drives and other community events that make a lasting difference.
                     </p>
-                    <a
-                        href="https://x.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="KINDORA on X"
-                        className="inline-flex size-10 items-center justify-center rounded-full border text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
-                    >
-                        <XLogo className="size-4" />
-                    </a>
+                    <div className="flex items-center gap-3">
+                        {socialLinks.map(({ href, label, Icon }) => (
+                            <a
+                                key={label}
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={label}
+                                className="inline-flex size-10 items-center justify-center rounded-full border text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground"
+                            >
+                                <Icon className="size-4" />
+                            </a>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="space-y-4">
