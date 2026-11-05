@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   },
   description:
     "Find and join cleanups, plantations, donation drives and other community events near you.",
+  icons: {
+    icon: "/kindora-logo.png",
+    shortcut: "/kindora-logo.png",
+    apple: "/kindora-logo.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

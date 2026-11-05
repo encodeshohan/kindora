@@ -1,13 +1,34 @@
+import Image from "next/image";
 import Link from "next/link";
-import { HeartHandshake } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export default function Logo() {
+export default function Logo({
+    alwaysShowName = false,
+}: {
+    alwaysShowName?: boolean;
+}) {
     return (
-        <Link href="/" className="flex items-center gap-2" aria-label="KINDORA home">
-            <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-                <HeartHandshake className="size-5" />
+        <Link
+            href="/"
+            className="flex items-center gap-2"
+            aria-label="KINDORA home"
+        >
+            <Image
+                src="/kindora-logo.png"
+                alt=""
+                width={160}
+                height={40}
+                priority
+                className="h-9 w-auto"
+            />
+            <span
+                className={cn(
+                    "text-xl font-bold tracking-tight",
+                    alwaysShowName ? "inline" : "hidden lg:inline",
+                )}
+            >
+                KINDORA
             </span>
-            <span className="text-xl font-bold tracking-tight">KINDORA</span>
         </Link>
     );
 }

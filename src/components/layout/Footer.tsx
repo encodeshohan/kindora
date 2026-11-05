@@ -22,7 +22,7 @@ export default function Footer() {
 
             <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="space-y-4">
-                    <Logo />
+                    <Logo alwaysShowName />
                     <p className="text-sm leading-relaxed text-muted-foreground">
                         KINDORA connects neighbours with cleanups, plantations, donation
                         drives and other community events that make a lasting difference.
