@@ -4,8 +4,8 @@ Small acts, lasting change.
 
 KINDORA is a social development events platform. People discover cleanups, plantations, donation drives and other community events, join them with one click, and host events of their own.
 
-🌐 **Live Demo:** [KINDORA](https://kindora-encodeshohan.vercel.app/)
-📦 **Frontend Repository:** [encodeshohan/kindora](https://github.com/encodeshohan/kindora)
+🌐 **Live Demo:** [KINDORA](https://kindora-encodeshohan.vercel.app/)<br>
+📦 **Frontend Repository:** [encodeshohan/kindora](https://github.com/encodeshohan/kindora)<br>
 🖥️ **Backend Repository:** [encodeshohan/kindora-server](https://github.com/encodeshohan/kindora-server)
 
 ---
