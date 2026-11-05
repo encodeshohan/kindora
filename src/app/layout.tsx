@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import SocialLoginToast from "@/components/auth/SocialLoginToast";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </main>
           <Footer />
           <Toaster richColors />
+          <SocialLoginToast />
         </ThemeProvider>
       </body>
     </html>

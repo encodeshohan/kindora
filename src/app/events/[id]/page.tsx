@@ -3,7 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { ArrowLeft, CalendarDays, MapPin, Tag } from "lucide-react";
+import {
+    ArrowLeft,
+    CalendarDays,
+    CalendarX,
+    MapPin,
+    Tag,
+    Users,
+} from "lucide-react";
 import EventDetailsSkeleton from "@/components/events/EventDetailsSkeleton";
 import JoinEventButton from "@/components/events/JoinEventButton";
 import Notice from "@/components/shared/Notice";
@@ -12,10 +19,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getEventById } from "@/lib/api";
 import type { IEvent } from "@/lib/types/event";
-import { formatEventDate, getInitials } from "@/lib/format";
+import { formatEventDate, getInitials, getToday } from "@/lib/format";
 
 export const metadata: Metadata = { title: "Event Details" };
-
 
 async function EventDetails({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -38,6 +44,9 @@ async function EventDetails({ params }: { params: Promise<{ id: string }> }) {
     if (!event) {
         notFound();
     }
+
+    const isPast = event.date < getToday();
+    const joinedCount = event.joinedCount ?? 0;
 
     const facts = [
         { icon: CalendarDays, label: "Date", value: formatEventDate(event.date) },
@@ -74,7 +83,7 @@ async function EventDetails({ params }: { params: Promise<{ id: string }> }) {
                     </h1>
                     <div>
                         <h2 className="mb-3 text-xl font-semibold">About this event</h2>
-                        <p className="whitespace-pre-line break-words leading-relaxed text-muted-foreground text-justify">
+                        <p className="whitespace-pre-line break-words text-justify leading-relaxed text-muted-foreground">
                             {event.description}
                         </p>
                     </div>
@@ -118,7 +127,26 @@ async function EventDetails({ params }: { params: Promise<{ id: string }> }) {
                             </div>
                         </div>
 
-                        <JoinEventButton eventId={event._id} initialCount={event.joinedCount ?? 0} />
+                        {isPast ? (
+                            <div className="space-y-3">
+                                <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                                    <Users className="size-4 text-primary" />
+                                    <span className="font-semibold text-foreground">
+                                        {joinedCount}
+                                    </span>
+                                    {joinedCount === 1 ? "person joined" : "people joined"}
+                                </p>
+                                <p className="flex items-center justify-center gap-2 rounded-lg bg-muted px-3 py-2 text-sm font-medium text-muted-foreground">
+                                    <CalendarX className="size-4" />
+                                    This event has already taken place
+                                </p>
+                            </div>
+                        ) : (
+                            <JoinEventButton
+                                eventId={event._id}
+                                initialCount={joinedCount}
+                            />
+                        )}
                     </div>
                 </aside>
             </div>

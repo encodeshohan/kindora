@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
+import { SOCIAL_LOGIN_FLAG } from "@/lib/constants";
 
 type Provider = "google" | "github";
 
@@ -49,12 +50,14 @@ export default function SocialButtons({ callbackUrl }: { callbackUrl: string }) 
 
     const handleSocialLogin = async (provider: Provider) => {
         setPending(provider);
+        sessionStorage.setItem(SOCIAL_LOGIN_FLAG, String(Date.now()));
         const { error } = await authClient.signIn.social({
             provider,
             callbackURL: callbackUrl,
             errorCallbackURL: "/login",
         });
         if (error) {
+            sessionStorage.removeItem(SOCIAL_LOGIN_FLAG);
             toast.error(error.message ?? "Could not start social login");
             setPending(null);
         }

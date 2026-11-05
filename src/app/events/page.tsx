@@ -1,167 +1,111 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import {
-    ArrowLeft,
-    CalendarDays,
-    CalendarX,
-    MapPin,
-    Tag,
-    Users,
-} from "lucide-react";
-import EventDetailsSkeleton from "@/components/events/EventDetailsSkeleton";
-import JoinEventButton from "@/components/events/JoinEventButton";
+import EventFilters from "@/components/events/EventFilters";
+import EventsGrid from "@/components/events/EventsGrid";
+import EventsGridSkeleton from "@/components/events/EventsGridSkeleton";
 import Notice from "@/components/shared/Notice";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import SectionHeading from "@/components/shared/SectionHeading";
 import { Button } from "@/components/ui/button";
-import { getEventById } from "@/lib/api";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getEvents } from "@/lib/api";
+import { EVENT_TYPES } from "@/lib/constants";
+import type { EventType } from "@/lib/constants";
 import type { IEvent } from "@/lib/types/event";
-import { formatEventDate, getInitials, getToday } from "@/lib/format";
 
-export const metadata: Metadata = { title: "Event Details" };
+export const metadata: Metadata = { title: "Upcoming Events" };
 
-async function EventDetails({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
+type SearchParams = Record<string, string | string[] | undefined>;
 
-    let event: IEvent | null;
+const first = (value: string | string[] | undefined) =>
+    Array.isArray(value) ? value[0] : value;
+
+const isEventType = (value: string | undefined): value is EventType =>
+    EVENT_TYPES.some((type) => type === value);
+
+async function EventsResults({
+    searchParams,
+}: {
+    searchParams: Promise<SearchParams>;
+}) {
+    const params = await searchParams;
+    const search = first(params.search)?.trim() || undefined;
+    const location = first(params.location)?.trim() || undefined;
+    const rawType = first(params.type);
+    const type = isEventType(rawType) ? rawType : undefined;
+    const hasFilters = Boolean(search || location || type);
+
+    let events: IEvent[];
 
     try {
-        event = await getEventById(id);
+        events = await getEvents({ search, type, location });
     } catch {
         return (
-            <div className="mx-auto max-w-7xl px-6 py-16">
-                <Notice
-                    title="We couldn't load this event"
-                    text="Something went wrong on our side. Please refresh in a moment."
-                />
-            </div>
+            <Notice
+                title="We couldn’t load events"
+                text="Something went wrong on our side. Please refresh in a moment."
+            />
         );
     }
 
-    if (!event) {
-        notFound();
+    if (events.length === 0) {
+        return hasFilters ? (
+            <Notice
+                title="No events match your search"
+                text="Try a different title, type or location."
+            >
+                <Button
+                    variant="outline"
+                    render={<Link href="/events" />}
+                    nativeButton={false}
+                >
+                    Clear filters
+                </Button>
+            </Notice>
+        ) : (
+            <Notice
+                title="No upcoming events yet"
+                text="Be the first to host one and bring your community together."
+            >
+                <Button render={<Link href="/create-event" />} nativeButton={false}>
+                    Host an event
+                </Button>
+            </Notice>
+        );
     }
 
-    const isPast = event.date < getToday();
-    const joinedCount = event.joinedCount ?? 0;
-
-    const facts = [
-        { icon: CalendarDays, label: "Date", value: formatEventDate(event.date) },
-        { icon: MapPin, label: "Location", value: event.location },
-        { icon: Tag, label: "Event type", value: event.type },
-    ];
-
     return (
-        <div className="mx-auto max-w-7xl px-6 py-10 md:py-14">
-            <Button
-                variant="ghost"
-                className="mb-6"
-                render={<Link href="/events" />}
-                nativeButton={false}
-            >
-                <ArrowLeft />
-                Back to Events
-            </Button>
-
-            <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
-                <article className="min-w-0 space-y-6">
-                    <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-muted">
-                        <Image
-                            src={event.thumbnail}
-                            alt={event.title}
-                            fill
-                            sizes="(min-width: 1024px) 66vw, 100vw"
-                            className="object-cover"
-                        />
-                        <Badge className="absolute left-4 top-4">{event.type}</Badge>
-                    </div>
-                    <h1 className="break-words text-4xl font-light tracking-tight md:text-5xl">
-                        {event.title}
-                    </h1>
-                    <div>
-                        <h2 className="mb-3 text-xl font-semibold">About this event</h2>
-                        <p className="whitespace-pre-line break-words text-justify leading-relaxed text-muted-foreground">
-                            {event.description}
-                        </p>
-                    </div>
-                </article>
-
-                <aside className="lg:sticky lg:top-24 lg:self-start">
-                    <div className="space-y-6 rounded-2xl border bg-card p-6">
-                        <h2 className="text-xl font-semibold">Event details</h2>
-                        <ul className="space-y-4">
-                            {facts.map(({ icon: Icon, label, value }) => (
-                                <li key={label} className="flex items-start gap-3">
-                                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
-                                        <Icon className="size-5" />
-                                    </span>
-                                    <div className="min-w-0">
-                                        <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                                            {label}
-                                        </p>
-                                        <p className="break-words font-medium">{value}</p>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-
-                        <div className="flex items-center gap-3 border-t pt-5">
-                            <Avatar className="size-10">
-                                <AvatarImage
-                                    src={event.creatorPhoto || undefined}
-                                    alt={event.creatorName}
-                                    referrerPolicy="no-referrer"
-                                />
-                                <AvatarFallback>{getInitials(event.creatorName)}</AvatarFallback>
-                            </Avatar>
-                            <div className="min-w-0">
-                                <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                                    Hosted by
-                                </p>
-                                <p className="truncate font-medium">
-                                    {event.creatorName || "A KINDORA member"}
-                                </p>
-                            </div>
-                        </div>
-
-                        {isPast ? (
-                            <div className="space-y-3">
-                                <p className="flex items-center gap-2 text-sm text-muted-foreground">
-                                    <Users className="size-4 text-primary" />
-                                    <span className="font-semibold text-foreground">
-                                        {joinedCount}
-                                    </span>
-                                    {joinedCount === 1 ? "person joined" : "people joined"}
-                                </p>
-                                <p className="flex items-center justify-center gap-2 rounded-lg bg-muted px-3 py-2 text-sm font-medium text-muted-foreground">
-                                    <CalendarX className="size-4" />
-                                    This event has already taken place
-                                </p>
-                            </div>
-                        ) : (
-                            <JoinEventButton
-                                eventId={event._id}
-                                initialCount={joinedCount}
-                            />
-                        )}
-                    </div>
-                </aside>
-            </div>
-        </div>
+        <>
+            <p className="mb-6 text-sm text-muted-foreground">
+                {events.length} upcoming {events.length === 1 ? "event" : "events"}
+            </p>
+            <EventsGrid events={events} />
+        </>
     );
 }
 
-export default function EventDetailsPage({
-    params,
+export default function EventsPage({
+    searchParams,
 }: {
-    params: Promise<{ id: string }>;
+    searchParams: Promise<SearchParams>;
 }) {
     return (
-        <Suspense fallback={<EventDetailsSkeleton />}>
-            <EventDetails params={params} />
-        </Suspense>
+        <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
+            <SectionHeading
+                eyebrow="Find your cause"
+                title="Upcoming Events"
+                description="Only events that have not happened yet are shown. Search by title, type or location."
+            />
+
+            <div className="space-y-8">
+                <Suspense fallback={<Skeleton className="h-28 w-full rounded-2xl" />}>
+                    <EventFilters />
+                </Suspense>
+
+                <Suspense fallback={<EventsGridSkeleton />}>
+                    <EventsResults searchParams={searchParams} />
+                </Suspense>
+            </div>
+        </div>
     );
 }

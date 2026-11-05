@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import FormField from "./FormField";
 import PasswordInput from "./PasswordInput";
 import SocialButtons from "./SocialButtons";
+import { SOCIAL_LOGIN_FLAG } from "@/lib/constants";
 
 const initialForm = { email: "", password: "" };
 type FormFieldName = keyof typeof initialForm;
@@ -31,6 +32,7 @@ export default function LoginForm() {
 
     useEffect(() => {
         if (hasSocialError) {
+            sessionStorage.removeItem(SOCIAL_LOGIN_FLAG);
             toast.error("Social login failed. Please try again.");
         }
     }, [hasSocialError]);

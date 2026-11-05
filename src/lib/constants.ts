@@ -9,3 +9,4 @@ export const EVENT_TYPES = [
 ] as const;
 
 export type EventType = (typeof EVENT_TYPES)[number];
+export const SOCIAL_LOGIN_FLAG = "kindora:social-login";
