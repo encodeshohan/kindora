@@ -66,7 +66,7 @@ async function JoinedEventsContent() {
     const today = getToday();
     // The API already sorts by event date (earliest first).
     const upcoming = joined.filter((event) => event.date >= today);
-    const past = joined.filter((event) => event.date < today).reverse();
+    const past = joined.filter((event) => event.date < today);
 
     return (
         <div className="space-y-12">
