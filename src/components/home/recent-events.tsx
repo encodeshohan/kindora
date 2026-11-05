@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import SectionHeading from "@/components/shared/SectionHeading";
 import EventsGrid from "@/components/events/EventsGrid";
@@ -8,9 +9,11 @@ import { getEvents } from "@/lib/api";
 import type { IEvent } from "@/lib/types/event";
 import Notice from "@/components/shared/Notice";
 
-
-
 async function RecentEventsList() {
+    // Mark this component as request-time. Must run BEFORE the try/catch,
+    // otherwise the catch swallows Next.js's prerender signal.
+    await connection();
+
     let events: IEvent[];
 
     try {

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { CalendarDays } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function NavLink({
@@ -20,11 +21,21 @@ export default function NavLink({
             href={href}
             aria-current={active ? "page" : undefined}
             className={cn(
-                "rounded-md px-2 py-2 text-sm font-medium transition-colors hover:text-primary sm:px-3",
-                active ? "text-primary" : "text-muted-foreground",
+                "group inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium outline-none transition-colors",
+                "focus-visible:ring-3 focus-visible:ring-ring/50 sm:px-4",
+                active
+                    ? "border-primary/40 bg-primary/15 text-primary"
+                    : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-primary",
             )}
         >
-            {children}
+            <CalendarDays className="size-4 shrink-0" />
+            <span>{children}</span>
+            {active && (
+                <span
+                    aria-hidden="true"
+                    className="size-1.5 rounded-full bg-primary"
+                />
+            )}
         </Link>
     );
 }
