@@ -36,7 +36,7 @@ export default function EventFormFields({
     return (
         <div className="grid gap-5 sm:grid-cols-2">
             <div className="sm:col-span-2">
-                <FormField id={id("title")} label="Event title" error={errors.title}>
+                <FormField id={id("title")} label="Event Title" error={errors.title}>
                     <Input
                         id={id("title")}
                         placeholder="Beach cleanup at the lake road"
@@ -48,7 +48,7 @@ export default function EventFormFields({
                 </FormField>
             </div>
 
-            <FormField id={id("type")} label="Event type" error={errors.type}>
+            <FormField id={id("type")} label="Event Type" error={errors.type}>
                 <Select
                     value={values.type || null}
                     onValueChange={(value) => onChange("type", value ?? "")}
@@ -67,7 +67,7 @@ export default function EventFormFields({
                 </Select>
             </FormField>
 
-            <FormField id={id("date")} label="Event date" error={errors.date}>
+            <FormField id={id("date")} label="Event Date" error={errors.date}>
                 <Input
                     id={id("date")}
                     type="date"
@@ -91,7 +91,7 @@ export default function EventFormFields({
 
             <FormField
                 id={id("thumbnail")}
-                label="Thumbnail image URL"
+                label="Thumbnail Image URL"
                 error={errors.thumbnail}
             >
                 <Input

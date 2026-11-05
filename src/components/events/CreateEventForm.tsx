@@ -11,7 +11,9 @@ import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import type { EventFormValues } from "@/lib/types/event";
 import { validateEventForm } from "@/lib/validation";
 import type { EventFormErrors } from "@/lib/validation";
+import FormField from "@/components/auth/FormField";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import EventFormFields from "./EventFormFields";
 
 const initialValues: EventFormValues = {
@@ -23,7 +25,13 @@ const initialValues: EventFormValues = {
     date: "",
 };
 
-export default function CreateEventForm({ minDate }: { minDate: string }) {
+export default function CreateEventForm({
+    minDate,
+    creator,
+}: {
+    minDate: string;
+    creator: { name: string; email: string };
+}) {
     const router = useRouter();
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState<EventFormErrors>({});
@@ -96,6 +104,31 @@ export default function CreateEventForm({ minDate }: { minDate: string }) {
                 minDate={minDate}
                 onChange={update}
             />
+
+            <div className="grid gap-5 sm:grid-cols-2">
+                <FormField id="create-creatorName" label="Creator Name">
+                    <Input
+                        id="create-creatorName"
+                        value={creator.name}
+                        disabled
+                        readOnly
+                    />
+                </FormField>
+                <FormField id="create-creatorEmail" label="Creator Email">
+                    <Input
+                        id="create-creatorEmail"
+                        type="email"
+                        value={creator.email}
+                        disabled
+                        readOnly
+                    />
+                </FormField>
+                <p className="text-xs text-muted-foreground sm:col-span-2">
+                    Your name and email come from your account and are shown as the
+                    event host.
+                </p>
+            </div>
+
             <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                 <Button
                     type="button"
@@ -108,7 +141,7 @@ export default function CreateEventForm({ minDate }: { minDate: string }) {
                 </Button>
                 <Button type="submit" size="lg" disabled={submitting}>
                     {submitting && <Loader2 className="animate-spin" />}
-                    Create event
+                    Create Event
                 </Button>
             </div>
         </form>

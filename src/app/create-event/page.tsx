@@ -15,7 +15,12 @@ async function CreateEventGate() {
     if (!session) {
         redirect("/login?callbackURL=%2Fcreate-event");
     }
-    return <CreateEventForm minDate={getToday()} />;
+    return (
+        <CreateEventForm
+            minDate={getToday()}
+            creator={{ name: session.user.name, email: session.user.email }}
+        />
+    );
 }
 
 export default function CreateEventPage() {
