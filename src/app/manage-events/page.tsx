@@ -51,11 +51,11 @@ async function ManageEventsContent() {
         <div className="space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-sm text-muted-foreground">
-                    You are hosting {events.length}{" "}
+                    You Are Hosting {events.length}{" "}
                     {events.length === 1 ? "event" : "events"}
                 </p>
                 <Button render={<Link href="/create-event" />} nativeButton={false}>
-                    Create event
+                    Create Event
                 </Button>
             </div>
             <ManageEventsList events={events} today={getToday()} />
@@ -68,7 +68,7 @@ export default function ManageEventsPage() {
         <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
             <SectionHeading
                 eyebrow="Your events"
-                title="Manage events"
+                title="Manage Events"
                 description="Update the details of the events you host, or remove the ones you no longer need."
             />
             <Suspense fallback={<ManageEventsSkeleton />}>

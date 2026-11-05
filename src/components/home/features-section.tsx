@@ -4,22 +4,22 @@ import SectionHeading from "@/components/shared/SectionHeading";
 const features = [
     {
         icon: Search,
-        title: "Discover events",
+        title: "Discover Events",
         text: "Browse upcoming events and filter them by type or location.",
     },
     {
         icon: CalendarCheck,
-        title: "Join in one click",
+        title: "Join in One Click",
         text: "Log in and reserve your spot. You can never join the same event twice.",
     },
     {
         icon: CalendarPlus,
-        title: "Host your own",
+        title: "Host Your Own",
         text: "Create an event with a date, a place and a photo, then update it any time.",
     },
     {
         icon: ClipboardList,
-        title: "Stay organised",
+        title: "Stay Organised",
         text: "Every event you have joined is listed in one place, sorted by date.",
     },
 ];
@@ -29,7 +29,7 @@ export default function FeaturesSection() {
         <section className="mx-auto max-w-7xl px-6 py-16 md:py-24">
             <SectionHeading
                 eyebrow="Why KINDORA"
-                title="Everything you need to take part"
+                title="Everything You Need To Take Part"
                 description="From finding the right cause to keeping track of your commitments, we keep it simple."
             />
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -42,7 +42,7 @@ export default function FeaturesSection() {
                             <Icon className="size-6" />
                         </span>
                         <h3 className="mb-2 text-lg font-semibold">{title}</h3>
-                        <p className="text-sm leading-relaxed text-muted-foreground">
+                        <p className="text-sm leading-relaxed text-muted-foreground text-justify">
                             {text}
                         </p>
                     </div>

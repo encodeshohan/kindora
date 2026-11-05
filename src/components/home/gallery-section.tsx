@@ -16,7 +16,7 @@ export default function GallerySection() {
         <section className="mx-auto max-w-7xl px-6 py-16 md:py-24">
             <SectionHeading
                 eyebrow="Gallery"
-                title="Our community in action"
+                title="Our Community in Action"
                 description="Neighbours, volunteers and friends turning good intentions into real results."
             />
             <div className="grid grid-cols-2 gap-4 lg:grid-cols-3">

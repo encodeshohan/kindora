@@ -9,8 +9,8 @@ export const metadata: Metadata = { title: "Register" };
 export default function RegisterPage() {
     return (
         <AuthLayout
-            title="Create your account"
-            subtitle="Join KINDORA and start making a difference."
+            title="Create Your Account"
+            subtitle="Join KINDORA and Start Making a Difference."
         >
             <Suspense fallback={<Skeleton className="h-[34rem] w-full" />}>
                 <RegisterForm />

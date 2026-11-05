@@ -44,7 +44,7 @@ export default function RecentEvents() {
         <section className="mx-auto max-w-7xl px-6 py-16 md:py-24">
             <SectionHeading
                 eyebrow="Happening soon"
-                title="Upcoming events"
+                title="Upcoming Events"
                 description="The next events on the calendar. Pick one and show up."
             />
 
@@ -59,7 +59,7 @@ export default function RecentEvents() {
                     render={<Link href="/events" />}
                     nativeButton={false}
                 >
-                    View all events
+                    View All Events
                 </Button>
             </div>
         </section>

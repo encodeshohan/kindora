@@ -54,7 +54,7 @@ async function EventDetails({ params }: { params: Promise<{ id: string }> }) {
                 nativeButton={false}
             >
                 <ArrowLeft />
-                Back to events
+                Back to Events
             </Button>
 
             <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
@@ -74,7 +74,7 @@ async function EventDetails({ params }: { params: Promise<{ id: string }> }) {
                     </h1>
                     <div>
                         <h2 className="mb-3 text-xl font-semibold">About this event</h2>
-                        <p className="whitespace-pre-line break-words leading-relaxed text-muted-foreground">
+                        <p className="whitespace-pre-line break-words leading-relaxed text-muted-foreground text-justify">
                             {event.description}
                         </p>
                     </div>

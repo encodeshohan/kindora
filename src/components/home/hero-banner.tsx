@@ -29,13 +29,13 @@ export default function HeroBanner() {
                 <div className="space-y-8">
                     <span className="inline-flex items-center gap-2 rounded-full border bg-card px-4 py-1.5 text-sm text-muted-foreground">
                         <Sprout className="size-4 text-primary" />
-                        Community events, made simple
+                        Community Events, Made Simple
                     </span>
                     <h1 className="text-5xl font-light tracking-tight md:text-6xl">
-                        Small acts,{" "}
-                        <span className="font-semibold text-primary">lasting change</span>.
+                        Small Acts,{" "}
+                        <span className="font-semibold text-primary">Lasting Change</span>.
                     </h1>
-                    <p className="max-w-lg text-lg text-muted-foreground">
+                    <p className="max-w-lg text-lg text-muted-foreground text-justify">
                         Discover cleanups, plantations, donation drives and more happening
                         near you. Join in with one click, or host an event of your own.
                     </p>

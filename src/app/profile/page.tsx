@@ -28,7 +28,7 @@ export default function ProfilePage() {
         <div className="mx-auto max-w-5xl px-6 py-12 md:py-16">
             <SectionHeading
                 eyebrow="Your account"
-                title="Your profile"
+                title="Your Profile"
                 description="Keep your name and photo up to date so neighbours know who is hosting."
             />
             <Suspense fallback={<ProfileSkeleton />}>

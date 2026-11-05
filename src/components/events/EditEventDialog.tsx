@@ -121,7 +121,7 @@ export default function EditEventDialog({
             <Dialog open={open} onOpenChange={handleOpenChange}>
                 <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
                     <DialogHeader>
-                        <DialogTitle>Update event</DialogTitle>
+                        <DialogTitle>Update Event</DialogTitle>
                         <DialogDescription>
                             Change the details below. People who joined will see the new
                             information.
@@ -146,7 +146,7 @@ export default function EditEventDialog({
                             </Button>
                             <Button type="submit" size="lg" disabled={submitting}>
                                 {submitting && <Loader2 className="animate-spin" />}
-                                Save changes
+                                Save Changes
                             </Button>
                         </div>
                     </form>

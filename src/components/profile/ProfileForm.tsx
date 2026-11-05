@@ -99,14 +99,14 @@ export default function ProfileForm({ user }: { user: ProfileUser }) {
                 className="space-y-6 rounded-2xl border bg-card p-6 sm:p-8"
             >
                 <div>
-                    <h2 className="text-xl font-semibold">Edit profile</h2>
+                    <h2 className="text-xl font-semibold">Edit Profile</h2>
                     <p className="mt-1 text-sm text-muted-foreground">
                         Your new name appears on events you create from now on. Events you
                         already created keep the name they were created with.
                     </p>
                 </div>
 
-                <FormField id="name" label="Full name" error={errors.name}>
+                <FormField id="name" label="Full Name" error={errors.name}>
                     <Input
                         id="name"
                         autoComplete="name"
@@ -146,7 +146,7 @@ export default function ProfileForm({ user }: { user: ProfileUser }) {
                             disabled={submitting}
                             onClick={handleDiscard}
                         >
-                            Discard changes
+                            Discard Changes
                         </Button>
                     )}
                     <Button
@@ -155,7 +155,7 @@ export default function ProfileForm({ user }: { user: ProfileUser }) {
                         disabled={submitting || !hasChanges}
                     >
                         {submitting && <Loader2 className="animate-spin" />}
-                        Save changes
+                        Save Changes
                     </Button>
                 </div>
             </form>

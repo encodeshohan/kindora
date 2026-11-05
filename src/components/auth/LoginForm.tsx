@@ -124,7 +124,7 @@ export default function LoginForm() {
             <p className="mt-6 text-center text-sm text-muted-foreground">
                 New to KINDORA?{" "}
                 <Link href={registerHref} className="font-medium text-primary hover:underline">
-                    Create an account
+                    Create an Account
                 </Link>
             </p>
         </div>

@@ -35,7 +35,7 @@ export default function NewsletterSection() {
                             <Mail className="size-6" />
                         </span>
                         <h2 className="text-4xl font-light tracking-tight md:text-5xl">
-                            Never miss an event
+                            Never Miss An Event!
                         </h2>
                         <p className="text-muted-foreground">
                             Get a short note when new community events are announced near you.

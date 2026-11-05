@@ -88,7 +88,7 @@ export default function RegisterForm() {
             toast.error(error.message ?? "Could not create your account");
             return;
         }
-        toast.success("Account created! Welcome to KINDORA.");
+        toast.success("Account Created! Welcome to KINDORA.");
         router.push(callbackUrl);
         router.refresh();
     };
@@ -101,11 +101,11 @@ export default function RegisterForm() {
     return (
         <div>
             <form onSubmit={handleSubmit} noValidate className="space-y-5">
-                <FormField id="name" label="Full name" error={errors.name}>
+                <FormField id="name" label="Full Name" error={errors.name}>
                     <Input
                         id="name"
                         autoComplete="name"
-                        placeholder="Your full name"
+                        placeholder="Your Full Name"
                         value={form.name}
                         onChange={(event) => update("name", event.target.value)}
                         aria-invalid={Boolean(errors.name)}
@@ -178,7 +178,7 @@ export default function RegisterForm() {
             <SocialButtons callbackUrl={callbackUrl} />
 
             <p className="mt-6 text-center text-sm text-muted-foreground">
-                Already have an account?{" "}
+                Already Have an Account?{" "}
                 <Link href={loginHref} className="font-medium text-primary hover:underline">
                     Login
                 </Link>

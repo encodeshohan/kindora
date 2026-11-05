@@ -4,17 +4,17 @@ import { CalendarCheck, CalendarPlus, Users } from "lucide-react";
 const benefits = [
     {
         icon: Users,
-        title: "Join your neighbours",
+        title: "Join Your Neighbours",
         text: "Find cleanups, plantations and donation drives close to home.",
     },
     {
         icon: CalendarPlus,
-        title: "Create your own events",
+        title: "Create Your Own Events",
         text: "Rally people around a cause you care about in a few minutes.",
     },
     {
         icon: CalendarCheck,
-        title: "Keep track of everything",
+        title: "Keep Track of Everything",
         text: "See every event you have joined, sorted by date.",
     },
 ];
@@ -34,9 +34,9 @@ export default function AuthLayout({
                 <div className="pointer-events-none absolute -right-20 -top-20 size-72 rounded-full bg-primary/15 blur-3xl" />
                 <div className="relative space-y-8">
                     <h2 className="text-4xl font-light tracking-tight">
-                        Make a difference,{" "}
-                        <span className="font-semibold text-primary">one event</span> at a
-                        time.
+                        Make A Difference,{" "}
+                        <span className="font-semibold text-primary">One Event</span> At A
+                        Time.
                     </h2>
                     <ul className="space-y-5">
                         {benefits.map(({ icon: Icon, title: benefitTitle, text }) => (
