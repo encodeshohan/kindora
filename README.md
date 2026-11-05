@@ -37,6 +37,7 @@ click, and host events of their own.
 | Name | Description |
 |---|---|
 | `MONGODB_URI` | MongoDB connection string (same cluster as the API) |
+| `DB_NAME` | Database name (defaults to `kindora`). Must match the API's `DB_NAME`. Use a different name for production |
 | `BETTER_AUTH_SECRET` | Long random secret used by Better Auth |
 | `BETTER_AUTH_URL` | Public URL of this app (no trailing slash). Must match `CLIENT_URL` on the API |
 | `NEXT_PUBLIC_API_URL` | Public URL of the API server (no trailing slash) |

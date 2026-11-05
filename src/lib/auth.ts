@@ -11,7 +11,7 @@ import {
 } from "@/lib/validation";
 
 const client = new MongoClient(process.env.MONGODB_URI as string);
-const db = client.db("kindora");
+const db = client.db(process.env.DB_NAME ?? "kindora");
 
 const socialProviders = {
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
