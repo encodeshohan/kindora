@@ -118,7 +118,7 @@ async function EventDetails({ params }: { params: Promise<{ id: string }> }) {
                             </div>
                         </div>
 
-                        <JoinEventButton eventId={event._id} />
+                        <JoinEventButton eventId={event._id} initialCount={event.joinedCount ?? 0} />
                     </div>
                 </aside>
             </div>

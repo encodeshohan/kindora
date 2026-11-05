@@ -13,6 +13,7 @@ export interface IEvent {
     creatorPhoto: string;
     createdAt: string;
     updatedAt?: string;
+    joinedCount?: number;
 }
 
 export interface IJoinedEvent {

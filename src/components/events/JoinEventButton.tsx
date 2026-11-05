@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CircleCheck, Loader2 } from "lucide-react";
+import { CircleCheck, Loader2, Users } from "lucide-react";
 import { toast } from "sonner";
 import { API_URL } from "@/lib/api";
 import { authClient } from "@/lib/auth-client";
@@ -10,12 +10,19 @@ import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function JoinEventButton({ eventId }: { eventId: string }) {
+export default function JoinEventButton({
+    eventId,
+    initialCount,
+}: {
+    eventId: string;
+    initialCount: number;
+}) {
     const router = useRouter();
     const { data: session, isPending } = authClient.useSession();
     const isLoggedIn = Boolean(session);
 
     const [joinedState, setJoinedState] = useState<boolean | null>(null);
+    const [count, setCount] = useState(initialCount);
     const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
@@ -78,6 +85,7 @@ export default function JoinEventButton({ eventId }: { eventId: string }) {
             if (result.response.status === 409) {
                 setJoinedState(true);
                 toast.info(result.message ?? "You have already joined this event");
+                router.refresh();
                 return;
             }
             if (!result.response.ok) {
@@ -85,6 +93,7 @@ export default function JoinEventButton({ eventId }: { eventId: string }) {
                 return;
             }
             setJoinedState(true);
+            setCount((current) => current + 1);
             toast.success("You have joined this event!");
         } catch {
             toast.error("Network error. Please try again.");
@@ -103,6 +112,7 @@ export default function JoinEventButton({ eventId }: { eventId: string }) {
                 return;
             }
             setJoinedState(false);
+            setCount((current) => Math.max(0, current - 1));
             toast.success("You have left the event");
         } catch {
             toast.error("Network error. Please try again.");
@@ -111,12 +121,26 @@ export default function JoinEventButton({ eventId }: { eventId: string }) {
         }
     };
 
-    if (isPending || (isLoggedIn && joinedState === null)) {
-        return <Skeleton className="h-9 w-full" />;
-    }
+    const countLine = (
+        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Users className="size-4 text-primary" />
+            {count === 0 ? (
+                "Be the first to join"
+            ) : (
+                <>
+                    <span className="font-semibold text-foreground">{count}</span>
+                    {count === 1 ? "person has joined" : "people have joined"}
+                </>
+            )}
+        </p>
+    );
 
-    if (isLoggedIn && joinedState) {
-        return (
+    let action;
+
+    if (isPending || (isLoggedIn && joinedState === null)) {
+        action = <Skeleton className="h-9 w-full" />;
+    } else if (isLoggedIn && joinedState) {
+        action = (
             <div className="space-y-3">
                 <p className="flex items-center justify-center gap-2 rounded-lg bg-primary/15 px-3 py-2 text-sm font-medium text-primary">
                     <CircleCheck className="size-4" />
@@ -134,17 +158,24 @@ export default function JoinEventButton({ eventId }: { eventId: string }) {
                 </Button>
             </div>
         );
+    } else {
+        action = (
+            <Button
+                size="lg"
+                className="w-full"
+                disabled={submitting}
+                onClick={handleJoin}
+            >
+                {submitting && <Loader2 className="animate-spin" />}
+                Join Event
+            </Button>
+        );
     }
 
     return (
-        <Button
-            size="lg"
-            className="w-full"
-            disabled={submitting}
-            onClick={handleJoin}
-        >
-            {submitting && <Loader2 className="animate-spin" />}
-            Join Event
-        </Button>
+        <div className="space-y-3">
+            {countLine}
+            {action}
+        </div>
     );
 }
